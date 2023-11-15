@@ -8,6 +8,10 @@ use App\Models\Profile;
 use App\Models\Project;
 use App\Models\ProjectWorker;
 use App\Models\Worker;
+use App\Models\Client;
+use App\Models\Avatar;
+use App\Models\Review;
+use App\Models\Tag;
 use Illuminate\Console\Command;
 
 class DevCommand extends Command
@@ -35,11 +39,23 @@ class DevCommand extends Command
     //    $this->prepareManyToMany();
 
     $worker = Worker::find(1);
-    dd($worker->projects->toArray());
+    $client = Client::find(1);
+
+    $worker->tags()->attach([1,3]);
+    $client->tags()->attach([1,2]);
+    $tag = Tag::find(3);
+    dd($tag->workers->toArray());
+   
     return 0;
     }
 
     private function prepareData() {
+
+        Client::create(['name' => 'Bob']);
+        Client::create(['name' => 'Jack']);
+        Client::create(['name' => 'Anna']);
+        Client::create(['name' => 'Dad']);
+
         $deportments = Deportment::create([
             'title' => 'IT',
         ]);
