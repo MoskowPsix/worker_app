@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SomeJob;
 use App\Models\Deportment;
 use App\Models\Position;
 use App\Models\Profile;
@@ -35,23 +36,7 @@ class DevCommand extends Command
      */
     public function handle()
     {
-    // $worker = Worker::find(1);
-    // $worker->delete();
-    // $worker2 = Worker::find(2);
-    // $worker2->delete();
-    // $worker = Worker::withTrashed()->find(1);
-    // $worker->restore();
-    // $workers = Worker::all();
-
-    $workers = Worker::onlyTrashed()->get();
-    foreach ($workers as $worker) {
-        $worker->restore();
-    }
-
-    $worker->forceDelete(); // Delete навсегда
-
-
-    // dd($workers->count());
+    SomeJob::dispatch()->onQueue('some_queue');
     return 0;
     }
 }
