@@ -18,11 +18,11 @@ class Worker extends Model
         static::created(function ($model) {
             event(new CreatedEvent($model));
         });
-    }
-    protected static function booted() {
         static::updated(function ($model) {
             // event(new CreatedEvent($model));
-            dd($model);
+            if($model->wasChanged() && $model->getOriginal('age') != $model->getAttributes()['age']) { // Видимо в 10 версии он уже не сравнивает типы, а сравнивает само значение 
+                dd(1);  
+            }
         });
     }
 
