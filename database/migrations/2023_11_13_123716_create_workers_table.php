@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('descriptions')->nullable();
             $table->boolean('is_married')->default(false);
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
