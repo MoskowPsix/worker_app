@@ -20,4 +20,15 @@ class Position extends Model
         return $this->belongsTo(Deportment::class);
     }
 
+    public function oldWorker() {
+        return $this->hasOne(Worker::class)->ofMany('age', 'max');
+    }
+
+    public function minWorker() {
+        return $this->hasOne(Worker::class)->ofMany('age', 'min');
+    }
+    public function nameWorker($name) {
+        return $this->hasOne(Worker::class)->where('name', 'LIKE','%'.$name.'%')->firstOrFail();
+    }
+
 }
