@@ -44,39 +44,39 @@ class WorkerController extends Controller
         }
 
         $workers = $workerQuery->paginate(4);
-        return view('worker.index', compact('workers'));
+        return view('workers.index', compact('workers'));
     }
     public function show($id) 
     {
         $worker = Worker::find($id);
-        return view('worker.show', compact('worker'));
+        return view('workers.show', compact('worker'));
     }
     public function create() 
     {
-        return view('worker.create');
+        return view('workers.create');
     }
     public function store(StoreRequest $request) 
     {
         $data = $request->validated();
         $data['is_married'] = isset($data['is_married']);
         Worker::create($data);
-        return redirect()->route('worker.index');
+        return redirect()->route('workers.index');
     }
     public function edit($id) 
     {
         $worker = Worker::find($id);
-        return view('worker.edit', compact('worker'));
+        return view('workers.edit', compact('worker'));
     }
     public function update($id, UpdateRequest $request) 
     {
         $data = $request->validated();
         $data['is_married'] = isset($data['is_married']);
         Worker::find($id)->update($data);
-        return redirect()->route('worker.show', $id);
+        return redirect()->route('workers.show', $id);
     }
-    public function delete($id) 
+    public function destroy($id) 
     {
         Worker::find($id)->delete();
-        return redirect()->route('worker.index');
+        return redirect()->route('workers.index');
     }
 }

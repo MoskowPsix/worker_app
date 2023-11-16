@@ -16,17 +16,17 @@ class Worker extends Model
     protected $table = "workers";
     protected $guarded = false;
 
-    protected static function booted() {
-        static::created(function ($model) {
-            event(new CreatedEvent($model));
-        });
-        static::updated(function ($model) {
-            // event(new CreatedEvent($model));
-            if($model->wasChanged() && $model->getOriginal('age') != $model->getAttributes()['age']) { // Видимо в 10 версии он уже не сравнивает типы, а сравнивает само значение 
-                dd(1);  
-            }
-        });
-    }
+    // protected static function booted() {
+    //     static::created(function ($model) {
+    //         event(new CreatedEvent($model));
+    //     });
+    //     static::updated(function ($model) {
+    //         // event(new CreatedEvent($model));
+    //         if($model->wasChanged() && $model->getOriginal('age') != $model->getAttributes()['age']) { // Видимо в 10 версии он уже не сравнивает типы, а сравнивает само значение 
+    //             dd(1);  
+    //         }
+    //     });
+    // }
 
     public function profile() {
         return $this->hasOne(Profile::class);

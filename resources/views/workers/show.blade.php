@@ -26,7 +26,7 @@
             <div>
                 {{$worker->updated_at}}
             </div>
-            <div><a href="{{ route('worker.index') }}">Назад</a></div>
+            <div><a href="{{ route('workers.index') }}">Назад</a></div>
             <hr>
     </div>
 @endsection
