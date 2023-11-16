@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DeportmentSeeder::class,
             PositionSeeder::class,
-            WorkerSeed::class,
+            ProfileSeeder::class,
         ]);     
     }
 }

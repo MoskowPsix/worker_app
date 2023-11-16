@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +24,7 @@ class WorkerFactory extends Factory
             "age" => fake()->numberBetween(18, 55),
             "descriptions" => fake()->text,
             "is_married" => fake()->boolean,
-            // "position_id" => fake()->boolean,
+            "position_id" => Position::inRandomOrder()->first()->id,
         ];
     }
 }
