@@ -9,6 +9,13 @@ use App\Models\Worker;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use App\Http\Filter\Var1\WorkerFilter;
+use Illuminate\Pipeline\Pipeline;
+use App\Http\Filter\Worker\WorkerNameFilter;
+use App\Http\Filter\Worker\WorkerSurnameFilter;
+use App\Http\Filter\Worker\WorkerEmailFilter;
+use App\Http\Filter\Worker\WorkerAgeToFromFilter;
+use App\Http\Filter\Worker\WorkerDescriptionsFilter;
+use App\Http\Filter\Worker\WorkerIsMarriedFilter;
 
 
 class WorkerController extends Controller
@@ -16,11 +23,19 @@ class WorkerController extends Controller
     public function index(IndexRequest $request) 
     {
         $data = $request->validated();
+        
+        $workerQuery = Worker::query();
 
-        // $filter = new WorkerFilter($data);
-        // $workerQuery = Worker::filter($filter);
-        $filter = app()->make(WorkerFilter::class, ['params' => $data]);
-        $workerQuery = Worker::filter($filter);
+        $workers = app()->make(Pipeline::class)
+        ->send($workerQuery)
+        ->through([
+            WorkerNameFilter::class,
+            WorkerSurnameFilter::class,
+            WorkerEmailFilter::class,
+            WorkerDescriptionsFilter::class,
+            WorkerIsMarriedFilter::class,
+        ])
+        ->thenReturn();
 
         $workers = $workerQuery->paginate(4);
         return view('workers.index', compact('workers'));
