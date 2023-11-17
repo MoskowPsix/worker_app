@@ -19,11 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth', 'isAdmin']], function() {
-    
-});
+// Route::group(['middleware' => ['auth', 'isAdmin']], function() {
 
-Route::resource('workers', WorkerController::class)->middleware(['auth', 'isAdmin']);
+// });
+
+Route::resource('workers', WorkerController::class)->middleware(['auth']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

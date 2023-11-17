@@ -17,8 +17,10 @@
         </form>
     </div>
     <div>
+            @can('create', \App\Modal\Worker::class)
+            <div><a href="{{route('workers.create')}}">Добавить</a></div>
+            @endcan
         @foreach($workers as $worker)
-        <div><a href="{{route('workers.create')}}">Добавить</a></div>
             <div>
                 Name: {{$worker->name}}
             </div>
@@ -44,7 +46,10 @@
                 {{$worker->updated_at}}
             </div>
             <div><a href="{{ route('workers.show', $worker->id) }}">Посмотреть</a></div>
-            <div><a href="{{ route('workers.edit', $worker->id) }}">Редактировать</a></div>
+             @can('update', $worker)
+             <div><a href="{{ route('workers.edit', $worker->id) }}">Редактировать</a></div>
+             @endcan
+             @can('update', $worker)
             <div>
                 <form action="{{route('workers.destroy', $worker->id)}}" method="post">
                 @csrf
@@ -52,6 +57,7 @@
                 <input type="submit" value="Удалить">
                 </form>
             </div>
+            @endcan
             <hr>
         @endforeach
 
