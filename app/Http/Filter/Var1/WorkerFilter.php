@@ -3,16 +3,13 @@
 namespace App\Http\Filter\Var1;
 
 use Illuminate\Database\Eloquent\Builder;
+use App\Http\Filter\Var1\AbstractFilter;
 
-class WorkerFilter {
 
-    private array $params = [];
+class WorkerFilter extends AbstractFilter {
 
-    public function __construct(array $params){
-        $this->params = $params;
-    }
-
-    public function getCallbacks() {
+    public function getCallbacks(): array 
+    {
         return [
             self::NAME => 'name',
             self::SURNAME => 'surname',
@@ -24,14 +21,6 @@ class WorkerFilter {
         ];
     }
 
-    public function applyFilter(Builder $builder) 
-    {
-        foreach($this->getCallbacks() as $key => $callback) {
-            if(isset($this->params[$key])){
-                $this->$callback($builder, $this->params[$key]);
-            }
-        }
-    }
     const NAME ='name';
     const SURNAME = 'surname';
     const EMAIL = 'email';
