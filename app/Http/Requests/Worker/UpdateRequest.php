@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
             'email' => 'required|email',
             'age' => 'nullable|integer',
             'descriptions' => 'nullable|string',
-            'is_married' => 'nullable|string',
+            'is_married' => 'nullable|boolean',
         ];
     }
 
