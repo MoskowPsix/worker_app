@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Filter\Var1\WorkerFilter;
 use App\Jobs\SomeJob;
 use App\Models\Deportment;
 use App\Models\Position;
@@ -36,7 +37,10 @@ class DevCommand extends Command
      */
     public function handle()
     {
-    SomeJob::dispatch()->onQueue('some_queue');
+    $workerQuery = Worker::query();
+    $filter = new WorkerFilter(['from' => 25, 'to' => 27]);
+    $filter->applyFilter($workerQuery);
+    dump($workerQuery->get()->toArray());
     return 0;
     }
 }

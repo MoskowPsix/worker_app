@@ -8,41 +8,19 @@ use App\Http\Requests\Worker\UpdateRequest;
 use App\Models\Worker;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
+use App\Http\Filter\Var1\WorkerFilter;
+
 
 class WorkerController extends Controller
 {
     public function index(IndexRequest $request) 
     {
         $data = $request->validated();
+
         $workerQuery = Worker::query();
-
-        if (isset($data['name'])) {
-            $workerQuery->where("name", 'LIKE', "%".$data["name"]."%");
-        }
-
-        if (isset($data['surname'])) {
-            $workerQuery->where("name", 'LIKE', "%".$data["surname"]."%");
-        }
-
-        if (isset($data['email'])) {
-            $workerQuery->where("name", 'LIKE', "%".$data["email"]."%");
-        }
-
-        if (isset($data['from'])) {
-            $workerQuery->where("age", '>', $data["from"]);
-        }
-
-        if (isset($data['to'])) {
-            $workerQuery->where("age", '<', $data["to"]);
-        }
-
-        if (isset($data['descriptions'])) {
-            $workerQuery->where("name", 'LIKE', "%".$data["descriptions"]."%");
-        }
-
-        if (isset($data['is_married'])) {
-            $workerQuery->where("is_married", true);
-        }
+        
+        $filter = new WorkerFilter($data);
+        $filter->applyFilter($workerQuery);
 
         $workers = $workerQuery->paginate(4);
         return view('workers.index', compact('workers'));
